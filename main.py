@@ -1,6 +1,7 @@
-from typing import Union
-
+from typing import Union , Optional
 from fastapi import FastAPI
+from pydantic import BaseModel
+
 
 app = FastAPI() #This creates an instance of the FastAPI app. app name change eeyam 
                 #This app will listen for HTTP requests (like when someone visits a URL) and respond based on the code you write.
@@ -24,7 +25,7 @@ Returns:
     dict: A dictionary containing the blog post ID.
 """
 
-#id all are same if its blogid the 3 id will need to have blogid
+#id all are same if its blogid the 3 id will need to have blogid , {id} path parameter
 @app.get('/blog/{id}')
 def show(id):
     return {'data':id} 
@@ -36,8 +37,35 @@ def comments(id):
     # return {'data': 'comment with ' + str(id)}
 
 
+
 #Query parameters to only get specific no.of data only
 # http://127.0.0.1:8000/book?limit=10
 @app.get('/book') 
 def limit_show(limit):
     return {'message': f'{limit} books records from the database'} 
+
+
+
+# http://127.0.0.1:8000/book?limit=10&published=true
+# http://127.0.0.1:8000/book?limit=10&published=false
+
+@app.get('/pens') 
+def limit_show_pen(limit,published:bool):  #published should be a boolean this is an query parameter(True or False).
+# def limit_show_pen(limit =10,published:bool = True): another eg 
+
+       
+        if published:
+            return {'message': f'{limit} published books records from the database'}
+        else:
+            return {'message': f'{limit} unpublished books records from the database'}
+        
+class Blog(BaseModel):
+      title : str
+      body : str
+      published : Optional[bool] = None
+
+@app.post('/')       
+def create(request:Blog):  #'BLOG' classil the model blog thane
+    # return request
+    return{'data': f"blog is created with title as : {request.title}"}
+        
