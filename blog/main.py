@@ -1,6 +1,10 @@
 from fastapi import FastAPI
+from . import schemas
+
 app = FastAPI() 
 
+
+
 @app.post('/blog')
-def create():
-    return "creating"
+def create(request : schemas.Blog):
+    return request
