@@ -2,6 +2,8 @@ from typing import Union , Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+import uvicorn
+
 
 app = FastAPI() #This creates an instance of the FastAPI app. app name change eeyam 
                 #This app will listen for HTTP requests (like when someone visits a URL) and respond based on the code you write.
@@ -45,7 +47,6 @@ def limit_show(limit):
     return {'message': f'{limit} books records from the database'} 
 
 
-
 # http://127.0.0.1:8000/book?limit=10&published=true
 # http://127.0.0.1:8000/book?limit=10&published=false
 
@@ -68,4 +69,10 @@ class Blog(BaseModel):
 def create(request:Blog):  #'BLOG' classil the model blog thane
     # return request
     return{'data': f"blog is created with title as : {request.title}"}
+
+
+
+# if __name__ == "__main__":
+#     uvicorn.run(app, host='127.0.0.1', port=9000)
+    
         
