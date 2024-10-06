@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 SQLALCHEMY_DATABASE_URL = "sqlite:///./blog.db"
 
 
-# Create the engine (connection to database)
+# Create the engine (connection to database) "The engine that will manage connections to the database."
 engine = create_engine(SQLALCHEMY_DATABASE_URL , connect_args ={"check_same_thread" : False} )
 
 SessionLocal = sessionmaker(bind = engine , autocommit=False , autoflush=False)
