@@ -3,6 +3,7 @@ from . import schemas , models
 from .database import engine , SessionLocal
 from sqlalchemy.orm import Session
 from typing import List
+from passlib.context import CryptContext
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -99,7 +100,7 @@ def show_all(db: Session = Depends(get_db)):
 
 
                #for getting data through id / single blog entry from the database by its id
-               
+       
 @app.get('/blog/{id}' , status_code = 200 , response_model=schemas.ShowBlog)
 # The Function Receives the Path Parameter:
 def show_data_by_id(id, response : Response, db: Session = Depends(get_db) ):
@@ -120,10 +121,13 @@ def show_data_by_id(id, response : Response, db: Session = Depends(get_db) ):
 
 
 
-
+                                #User creation and hashed password
+                                    
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 @app.post('/user')
 def create_user(request : schemas.User , db: Session = Depends(get_db)):
-    new_user = models.User_model(Name=request.Name, Email=request.Email , Password=request.Password) 
+    hashedPassword = pwd_context.hash(request.Password)
+    new_user = models.User_model(Name=request.Name, Email=request.Email , Password=hashedPassword) 
     db.add(new_user)  
     db.commit()      
     db.refresh(new_user)  
