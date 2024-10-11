@@ -3,3 +3,14 @@ uvicorn
 sqlalchemy
 passlib
 bcrypt
+
+
+
+
+
+
+
+
+
+
+
