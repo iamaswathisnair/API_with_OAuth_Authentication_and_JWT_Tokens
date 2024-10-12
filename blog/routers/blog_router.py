@@ -5,20 +5,25 @@ from .. import schemas, database, models
 get_db = database.get_db
 
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/blog",
+    tags=['Blogs']
+)
 
 
-                #Read / for getting all data/to fetch all blog entries from the database
+                  #Read / for getting all data/to fetch all blog entries from the database
 
-@router.get('/blog', response_model= List[schemas.ShowBlog] , tags=['blogs'])
+@router.get('/', response_model= List[schemas.ShowBlog] )
 def show_all(db: Session = Depends(get_db)):
     blogs = db.query(models.Blog).all()
     return blogs
 
 
 
+
+
                             # creation / for storing data
-@router.post('/blog' , status_code = status.HTTP_201_CREATED , tags=['blogs'])
+@router.post('/' , status_code = status.HTTP_201_CREATED )
 def create(request : schemas.Blog, db: Session = Depends(get_db)): 
     new_blog = models.Blog(Title=request.Title, Body=request.Body,user_id =1) 
     db.add(new_blog)  # Using the session to add the new blog
@@ -28,8 +33,10 @@ def create(request : schemas.Blog, db: Session = Depends(get_db)):
 
 
 
-#deletion
-@router.delete('/blog/{id}' , status_code= status.HTTP_204_NO_CONTENT, tags=['blogs'])
+
+
+                                    #deletion
+@router.delete('/{id}' , status_code= status.HTTP_204_NO_CONTENT)
 def delete(id , db: Session = Depends(get_db)):
    
     blog = db.query(models.Blog).filter(models.Blog.id == id)
@@ -46,7 +53,7 @@ def delete(id , db: Session = Depends(get_db)):
 
 
                                     #updation
-@router.put('/blog/{id}', status_code= status.HTTP_202_ACCEPTED ,  tags=['blogs'])
+@router.put('/{id}', status_code= status.HTTP_202_ACCEPTED )
 def update(id, request: schemas.Blog, db: Session = Depends(get_db)):
     # First, check if the blog exists
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
@@ -66,10 +73,9 @@ def update(id, request: schemas.Blog, db: Session = Depends(get_db)):
 
 
 
-
          #for getting data through id / single blog entry from the database by its id
        
-@router.get('/blog/{id}' , status_code = 200 , response_model=schemas.ShowBlog ,  tags=['blogs'])
+@router.get('/{id}' , status_code = 200 , response_model=schemas.ShowBlog )
 # The Function Receives the Path Parameter:
 def show_data_by_id(id,  db: Session = Depends(get_db) ):
     blogs = db.query(models.Blog).filter(models.Blog.id == id).first()
