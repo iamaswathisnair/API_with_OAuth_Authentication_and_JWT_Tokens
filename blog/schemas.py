@@ -6,15 +6,22 @@ from pydantic import BaseModel
 
 
 # Schema for validating incoming data
-class Blog(BaseModel):
+class BlogBase(BaseModel):
     Title : str         #This class is for the user-facing side
     Body  : str
-         
+ 
+   
+class Blog(BlogBase):
+    class Config():
+        from_attributes = True 
+          
              
 class User(BaseModel):
     Name : str         #This class is for the user-facing side
     Email  : str
     Password  : str
+
+
 
 class ShowUser(BaseModel):
     
@@ -22,8 +29,8 @@ class ShowUser(BaseModel):
     Email  : str
     blogs : List[Blog] = []
     
-    class Config():
-        from_attributes = True 
+   
+   
         
 class ShowBlog(BaseModel):
     Title : str         #This class is for the user-facing side

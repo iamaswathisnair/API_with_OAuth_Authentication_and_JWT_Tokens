@@ -14,3 +14,13 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL , connect_args ={"check_same_thre
 SessionLocal = sessionmaker(bind = engine , autocommit=False , autoflush=False)
 
 Base = declarative_base()
+
+
+# Dependency that creates and closes database sessions
+def get_db(): #4
+    db= SessionLocal()  # Creates a new session (connection) with the database
+    try:
+        yield db        # Provides this session for use in the request
+    finally:
+        db.close()      # Closes the session when done
+       
