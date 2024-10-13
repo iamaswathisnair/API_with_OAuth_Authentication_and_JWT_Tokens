@@ -1,3 +1,4 @@
+
 # Defining What Data Looks Like for Users
 
 # PYDANTIC MODEL 
