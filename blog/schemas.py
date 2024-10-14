@@ -15,8 +15,9 @@ class BlogBase(BaseModel):
 class Blog(BlogBase):
     class Config():
         from_attributes = True 
+        
           
-             
+# User Schema for general user details           
 class User(BaseModel):
     Name : str         #This class is for the user-facing side
     Email  : str
@@ -41,6 +42,9 @@ class ShowBlog(BaseModel):
     class Config():
         from_attributes = True  # Correct for Pydantic v2.x
         orm_mode = True  # Use this to work with ORM objects
+        
      
-    
-    
+# Login Schema for authentication   
+class Login(BaseModel):
+    username: str
+    password:str    
