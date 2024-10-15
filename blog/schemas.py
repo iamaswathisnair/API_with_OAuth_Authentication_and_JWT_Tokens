@@ -1,9 +1,9 @@
-
 # Defining What Data Looks Like for Users
 
 # PYDANTIC MODEL 
 from typing import List
 from pydantic import BaseModel
+from typing import Optional
 
 
 # Schema for validating incoming data
@@ -31,8 +31,7 @@ class ShowUser(BaseModel):
     Email  : str
     blogs : List[Blog] = []
     
-   
-   
+     
         
 class ShowBlog(BaseModel):
     Title : str         #This class is for the user-facing side
@@ -48,3 +47,12 @@ class ShowBlog(BaseModel):
 class Login(BaseModel):
     username: str
     password:str    
+    
+    
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: Optional[str] = None    #str | None instead of Optional[str].

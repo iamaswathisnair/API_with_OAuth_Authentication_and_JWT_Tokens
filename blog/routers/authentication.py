@@ -2,6 +2,7 @@ from fastapi import APIRouter , Depends , status , HTTPException
 from .. import schemas , database, models
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
+from .. JWT_token import create_access_token
 
 # Password context for hashing and verification
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -26,6 +27,6 @@ def login(request:schemas.Login , db: Session = Depends(database.get_db)):
     if not verify_password(request.password, user.Password):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Incorrect password")
         
-    return 'login successful'
-
+    access_token = create_access_token(data={"sub": user.Email})
+    return{"access_token": access_token, "token_type":"bearer"}
 
