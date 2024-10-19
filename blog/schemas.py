@@ -55,4 +55,6 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: Optional[str] = None    #str | None instead of Optional[str].
+    Email: Optional[str] = None    #str | None instead of Optional[str].
+    
+    #remmber usernameaarnu ist then last ethiyappo emailaaki 
