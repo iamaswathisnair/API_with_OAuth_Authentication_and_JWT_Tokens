@@ -1,14 +1,14 @@
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends , HTTPException , status
 from sqlalchemy.orm import Session
-from .. import database
-import JWT_token
+from . import  JWT_token
+
 
 
 # Dependency to Get the Current User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(database.get_db)): #The token is a string, This parameter expects a JWT token
+def get_current_user(token: str = Depends(oauth2_scheme)): #The token is a string, This parameter expects a JWT token
 
 # 1. Extracts the JWT token from the request.
 

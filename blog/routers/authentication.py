@@ -3,6 +3,8 @@ from .. import schemas , database, models
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from .. JWT_token import create_access_token
+from fastapi.security import OAuth2PasswordRequestForm
+
 
 # Password context for hashing and verification
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -17,7 +19,7 @@ router = APIRouter(
 )
 
 @router.post('/login')
-def login(request:schemas.Login , db: Session = Depends(database.get_db)):
+def login(request:OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
     
     # Retrieve the user by email
     user = db.query(models.User_model).filter(models.User_model.Email  == request.username).first()
