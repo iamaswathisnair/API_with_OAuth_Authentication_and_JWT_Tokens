@@ -1,8 +1,9 @@
 services:
-type: web
-name:fastapi-project
-runtime:python
-plan:free
-autoDeploy:false
-buildCommand:pip install -r requirements.txt
-startCommand:uvicorn blog.main:app --reload
+  type: web
+  name: fastapi-project
+  runtime: python
+  plan: free
+  autoDeploy: false
+  buildCommand: pip install -r requirements.txt
+  startCommand: uvicorn blog.main:app --reload
+  
