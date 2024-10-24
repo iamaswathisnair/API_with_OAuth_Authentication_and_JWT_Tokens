@@ -3,7 +3,8 @@ from . import  models
 from .database import engine 
 from . routers import  blog_router , user_router , authentication
 
-
+import os
+print(os.getcwd()) 
 app = FastAPI()
 
 
