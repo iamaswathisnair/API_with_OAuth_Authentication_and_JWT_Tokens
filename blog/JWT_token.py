@@ -7,7 +7,7 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
-# to handle multiple databases in Django , rafana,  Kiban , kurbartes , dockers 
+# to handle multiple databases in Django , rafana,  Kiban , kurbartes , dockers ,Knowledge of Web Services, Microservices, REST, SOAP, APIs and XML
 def create_access_token(data: dict):
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
