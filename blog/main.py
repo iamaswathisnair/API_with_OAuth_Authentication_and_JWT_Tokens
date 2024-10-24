@@ -9,6 +9,9 @@ print(os.getcwd())  # Prints current working directory to help with debugging
 
 
 app = FastAPI()
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to my FastAPI application!"}
 
 
 models.Base.metadata.create_all(engine)
