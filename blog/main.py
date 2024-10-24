@@ -3,8 +3,11 @@ from . import  models
 from .database import engine 
 from . routers import  blog_router , user_router , authentication
 
+
 import os
-print(os.getcwd()) 
+print(os.getcwd())  # Prints current working directory to help with debugging
+
+
 app = FastAPI()
 
 
@@ -18,25 +21,7 @@ app.include_router(user_router.router)
 # Now all blog/user routes will be available under the /api path.
 
 
-
-       
-       
-       
-       
-
-
-              
-
-
-
-
-
-
-                                    
-   
-
-
-
-
-
-                           
+# This block ensures that the FastAPI app runs when this file is executed directly
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
